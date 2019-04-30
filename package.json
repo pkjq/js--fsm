@@ -1,0 +1,22 @@
+{
+  "name": "fsm-pkjq",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/fsm.js",
+  "keywords": [
+    "fsm"
+  ],
+  "author": "pkjq",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^11.13.8",
+    "sinon": "^7.3.2"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "scripts": {
+    "test": "mocha"
+  }
+}

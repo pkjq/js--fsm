@@ -252,4 +252,73 @@ describe('FSM', function () {
             assert(state2_leave.calledOnce);            
         });        
     });
+
+    describe('additional data', function () {
+        let additionalData = {
+            enter: undefined,
+            leave: undefined,
+        };
+
+        const fsmConfig = {
+            baseState: 'state_1',
+
+            states: {
+                state_1: {
+                    onEnter: data => additionalData.enter = data,
+                    onLeave: data => additionalData.leave = data,
+                },
+                state_2: {
+                    onEnter: data => additionalData.enter = data,
+                    onLeave: data => additionalData.leave = data,
+                },
+            },
+            transitions: {
+                tr1: {
+                    from: 'state_1',
+                    to: 'state_2',
+                    data: { anyData:'any-additional-data' },
+                },
+                tr2: {
+                    from: 'state_2',
+                    to: 'state_1',
+                },
+            },
+        };
+
+
+        it('base transition', function () {
+            const fsm = new FSM(fsmConfig);
+
+            assert.equal(fsm.state, 'state_1');
+            assert.equal(additionalData.enter, undefined);
+            assert.equal(additionalData.leave, undefined);
+
+            assert(fsm.on('tr1'));
+            assert.equal(fsm.state, 'state_2');
+            assert.deepEqual(additionalData.enter, { anyData: 'any-additional-data'});
+            assert.deepEqual(additionalData.leave, { anyData: 'any-additional-data'});
+
+            assert(fsm.on('tr2'));
+            assert.equal(fsm.state, 'state_1');
+            assert.equal(additionalData.enter, undefined);
+            assert.equal(additionalData.leave, undefined);
+        });
+        it('reset', function () {
+            const fsm = new FSM(fsmConfig);
+
+            assert.equal(fsm.state, 'state_1');
+            assert.equal(additionalData.enter, undefined);
+            assert.equal(additionalData.leave, undefined);
+
+            assert(fsm.on('tr1'));
+            assert.equal(fsm.state, 'state_2');
+            assert.deepEqual(additionalData.enter, { anyData: 'any-additional-data'});
+            assert.deepEqual(additionalData.leave, { anyData: 'any-additional-data'});
+
+            fsm.reset();
+            assert.equal(fsm.state, 'state_1');
+            assert.equal(additionalData.enter, undefined);
+            assert.equal(additionalData.leave, undefined);
+        });
+    });
 });

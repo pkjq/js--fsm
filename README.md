@@ -10,8 +10,8 @@ FSM with supporting additional condition on transitions
 
         states: {
             standby: {
-                onEnter: () => {}, // optional callbacks
-                onLeave: () => {}, // optional callbacks
+                onEnter: (data) => {}, // optional callbacks
+                onLeave: (data) => {}, // optional callbacks
             },
             state1: {
             },
@@ -33,7 +33,8 @@ FSM with supporting additional condition on transitions
                 {
                     from: 'standby',
                     to: 'state2',
-                    condition: (not_approve) => { return !not_approve; }
+                    condition: (not_approve) => { return !not_approve; },
+                    data: {} // [optional] additional data for states callback
                 }
             ],
             // Simple way of transition

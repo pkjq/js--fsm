@@ -28,7 +28,7 @@ export class FSM {
         else if (!checkCondition(transition))
             return false;
 
-        this._doTransition(transition.to);
+        this._doTransition(transition.to, transition.data);
         return true;
     }
 
@@ -41,14 +41,14 @@ export class FSM {
     }
 
 
-    private _doTransition(to_state:string) {
+    private _doTransition(to_state:string, data:any = undefined) {
         if (this._currentState === to_state)
             return;
 
         {
             const currentStateObj = this._getCurrentStateObj();
             if (currentStateObj && currentStateObj.onLeave)
-                currentStateObj.onLeave();
+                currentStateObj.onLeave(data);
         }
 
         this._currentState = to_state;
@@ -56,7 +56,7 @@ export class FSM {
         {
             const newStateObj = this._getCurrentStateObj();
             if (newStateObj.onEnter)
-                newStateObj.onEnter();
+                newStateObj.onEnter(data);
         }
     }
 

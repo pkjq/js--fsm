@@ -17,6 +17,8 @@
     "type": "git"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "tsc",
+    "prepare" : "npm run build"
   }
 }

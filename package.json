@@ -8,9 +8,10 @@
   ],
   "author": "pkjq",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@types/node": "^11.13.8"
+  },
   "devDependencies": {
-    "@types/node": "^11.13.8",
     "sinon": "^7.3.2"
   },
   "repository": {
@@ -19,7 +20,6 @@
   "scripts": {
     "test": "mocha",
     "build": "tsc",
-    "prepare" : "npm run build",
-    "preinstall": "npm run build"
+    "postinstall": "npm run build"
   }
 }
